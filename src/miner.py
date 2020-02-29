@@ -13,6 +13,6 @@ def load_data(url, token):
         res=requests.get(url, headers={"X-Auth-Token": token})
         if res.status_code == 200:
             data = res.json()
-    except:
+    except Exeption:
         pass
     return data
