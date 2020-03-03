@@ -3,24 +3,19 @@ import requests
 import time
 
 ENV = {
-   "targets": [
-     {"city_id": 1, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 2, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 3, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 4, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 5, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 6, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 7, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 8, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 9, "area_id": 2, "house_id": 6, "apartment_id": 1},
-     {"city_id": 10, "area_id": 2, "house_id": 6, "apartment_id": 1}
-     
-   ],
+   "targets": [],
     "url": "http://dt.miet.ru/ppo_it/api",
     "token": None,
-    "number": 10
+    "end_time" : 60
 }
 
+def make_targets():
+    """создание целей"""
+    for city in range(16):
+        for area in range(4):
+            for house in range(2):
+                for apartment in range(5):
+                    ENV["targets"].append({"city_id": city+1, "area_id": area+1, "house_id": house+1, "apartment_id": apartment+1})
 
 def read_token(path):
     """ извлечение токена """
@@ -54,22 +49,27 @@ def get_cities():
     return cities.get("data", [])
 
 def get_data_set():
+    """сбор данных о каждой цели"""
     data_set = []
     for target in ENV["targets"]:
-        #"city_id": 1, "area_id": 2, "house_id": 6, "apartment_id": 1
         url = f"{ENV['url']}/{target['city_id']}/{target['area_id']}/{target['house_id']}/{target['apartment_id']}"
-        print(url)
         data = load_data(url, ENV["token"])
         data_set.append(data)
     return data_set
         
 def main():
+    """основная функция"""
     read_token("../token.txt")
-    for i in range(ENV["number"]):
-        data = get_data_set()
-        time.sleep(1)
+    make_targets()
+    start_time = int(time.time())
+    while int(time.time()) - start_time <= ENV["end_time"]:
+        data = get_cities()
         print(data)
-        
+        print(" ")
+        time.sleep(1)
 
-if __name__ == "__main__":    
+def save_data(data):
+    pass
+
+if __name__ == "__main__":  
     main()
