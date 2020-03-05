@@ -1,31 +1,31 @@
-# -*- coding: utf-8 -*-
-import os
-import sqlite3
+BEGIN TRANSACTION;
 
-"""create d"""
-db_filename = './test.db'
-conn = sqlite3.connect(db_filename)
+CREATE TABLE city(
+    city_id integer PRIMARY KEY, 
+    city_name text
+);
 
-"""BEGIN TRANSACTION;
+CREATE TABLE tempersture_city(
+    id integer PRIMARY KEY, 
+    city_id int,
+    temperature int,
+    time int
+);
 
-/* Create a table called NAMES */
-CREATE TABLE NAMES(Id integer PRIMARY KEY, Name text);
+CREATE INDEX IF NOT EXISTS ixcity ON tempersture_city (city_id);
+CREATE INDEX IF NOT EXISTS ixtime ON tempersture_city (time);
+CREATE INDEX IF NOT EXISTS ixcitytime ON tempersture_city (city_id,time);
 
-/* Create few records in this table */
-INSERT INTO NAMES VALUES(1,'Tom');
-INSERT INTO NAMES VALUES(2,'Lucy');
-INSERT INTO NAMES VALUES(3,'Frank');
-INSERT INTO NAMES VALUES(4,'Jane');
-INSERT INTO NAMES VALUES(5,'Robert');
-COMMIT;
+CREATE TABLE apartment(
+    city_id int,
+    area_id int,
+    house_id int,
+    apartment_id int,
+    temperature int
+);
 
-/* Display all the records from the table */
-SELECT * FROM NAMES;"""
-
-script = "SELECT * FROM NAMES;"
-cursor = conn.cursor()
-cursor.execute(script)
-#print(conn.executescript(script))
-for row in cursor.fetchall():
-    print(row)
-conn.close()
+CREATE TABLE temperature_apartment(
+    time int,
+    id int,
+    temperature int
+);
