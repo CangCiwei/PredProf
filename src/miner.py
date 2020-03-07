@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import requests
 import time
+import sqlite3
 
-ENV = {
-   "targets": [],
-    "url": "http://dt.miet.ru/ppo_it/api",
-    "token": None,
-    "end_time" : 60
-}
+ENV = {"targets": [], 
+       "url": "http://dt.miet.ru/ppo_it/api", 
+       "token": None, 
+       "end_time": 5
+       }
 
 def make_targets():
     """создание целей"""
@@ -23,6 +23,7 @@ def read_token(path):
         ENV["token"] = fd.read()
     return ENV["token"]
 
+
 def load_data(url, token):
     """ извлечение данных """
     data = None
@@ -34,7 +35,12 @@ def load_data(url, token):
         pass
     return data
 
-def get_cities():
+
+def get_cities(url):
+    data = load_data(url)
+    
+
+def get_cities_data():
     """ извлечение подробных данных о каждом городе """
     url = "http://dt.miet.ru/ppo_it/api"
     token = read_token("../token.txt")
@@ -57,6 +63,13 @@ def get_data_set():
         data_set.append(data)
     return data_set
         
+def get_one_target(city, area, house, apartment):
+    """сбор данных об одной цели в реальном времени"""
+    read_token("../token.txt")
+    url = f"{ENV['url']}/{city}/{area}/{house}/{apartment}"
+    data = load_data(url, ENV["token"])
+    return data
+
 def main():
     """основная функция"""
     read_token("../token.txt")
@@ -71,5 +84,6 @@ def main():
 def save_data(data):
     pass
 
-if __name__ == "__main__":  
-    main()
+if __name__ == "__main__":
+    data = (load_data(f"{ENV['url']}/{i}", read_token("../token.txt")))["data"]["city_name"]
+    print(data)
