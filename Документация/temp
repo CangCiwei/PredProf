@@ -1,0 +1,5 @@
+def add_string_with_plus(iters):
+    s = ""
+    for i in range(iters):
+        s += "xyz"
+    assert len(s) == 3*iters
