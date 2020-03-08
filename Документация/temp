@@ -1,5 +1,5 @@
-def add_string_with_plus(iters):
+def abc_triple(n):
     s = ""
-    for i in range(iters):
-        s += "xyz"
-    assert len(s) == 3*iters
+    for i in range(n):
+        s += "abc"
+    assert len(s) == 3*n
