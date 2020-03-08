@@ -1,5 +1,0 @@
-def abc_triple(n):
-    s = ""
-    for i in range(n):
-        s += "abc"
-    assert len(s) == 3*n
