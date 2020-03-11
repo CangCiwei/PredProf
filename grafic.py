@@ -74,7 +74,7 @@ for i in [6,10]:
     plt.title("Значение температуры в квартире")
     ax.plot(range(626), z4[i])
     
-z5 = zadanie_5
+z5 = zadanie_5()
 for i in z5:
     fig, ax = plt.subplots()  
     plt.xlabel('Время')
