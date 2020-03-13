@@ -190,7 +190,7 @@ class UITask1(UITaskBase):
     def on_click_show(self, btn):
         
         
-        self.input_area_wgvalue
+        self.input_area_wg.value
         
         x = data["x"]
         y = data["t"]
