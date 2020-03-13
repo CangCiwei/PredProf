@@ -1,3 +1,0 @@
-#! /usr/bin/env bash
-
-./src/data_miner.py
